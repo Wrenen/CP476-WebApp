@@ -1,5 +1,7 @@
 CREATE DATABASE CP476_db;
 
+use CP476_db;
+
 CREATE TABLE `supplier` (
   `supplier_id` int NOT NULL AUTO_INCREMENT, 
   `supplier_name` varchar(50),
