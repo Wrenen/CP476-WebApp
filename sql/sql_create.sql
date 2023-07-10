@@ -1,3 +1,5 @@
+--Run the following: mysql --local-infile=1 -u root -p CP476_db < sql/sql_load.sql
+
 CREATE DATABASE CP476_db;
 
 use CP476_db;
@@ -24,11 +26,17 @@ CREATE TABLE `product` (
   FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
 
-SET GLOBAL local_infile=1;
+CREATE TABLE `user` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50),
+  `password` varchar(50),
+  PRIMARY KEY (`user_id`)
+);
 
--- quit
--- mysql --local-infile=1 -u root -p
--- use CP476_db;
+INSERT INTO user (username, password) VALUES ('Admin', 'CP476Project');
+INSERT INTO user (username, password) VALUES ('Lunshan Gao', 'CP476');
+
+SET GLOBAL local_infile=1;
 
 LOAD DATA LOCAL INFILE 'SupplierFile.txt' INTO TABLE supplier FIELDS TERMINATED BY ',';
 
