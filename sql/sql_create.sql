@@ -12,14 +12,15 @@ CREATE TABLE `supplier` (
 );
 
 CREATE TABLE `product` (
-  `product_id` int NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
   `product_name` varchar(50),
   `description` varchar(100),
   `price` varchar(50),
   `quantity` int,
   `status` char(2),
   `supplier_id` int,
-  PRIMARY KEY (product_id),
+  PRIMARY KEY (pid),
   FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
 
@@ -31,4 +32,4 @@ SET GLOBAL local_infile=1;
 
 LOAD DATA LOCAL INFILE 'SupplierFile.txt' INTO TABLE supplier FIELDS TERMINATED BY ',';
 
-LOAD DATA LOCAL INFILE 'ProductFile.txt' INTO TABLE product FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'ProductFile.txt' INTO TABLE product FIELDS TERMINATED BY ',' (product_id, product_name, description, price, quantity, status, supplier_id);
