@@ -51,7 +51,7 @@ form .txt_field{
     transform: scale(1.1);
 }
 
-input[type = "button"]{
+input[type = "submit"]{
     width: 100%;
     height: 40px;
     margin: 10px 2px 20px;
@@ -64,7 +64,7 @@ input[type = "button"]{
     transition: 0.5s;
 }
 
-input[type = "button"]:hover{
+input[type = "submit"]:hover{
     background-color: gray;
     transition: 0.5s;
 }
