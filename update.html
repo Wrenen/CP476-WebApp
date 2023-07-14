@@ -41,72 +41,93 @@
     </form>
     <script>
         // JavaScript code to dynamically add columns and values input fields based on user selection
-const tableSelect = document.getElementById('table');
-const columnsContainer = document.getElementById('columns-container');
-const whereContainer = document.getElementById('where-container');
+        const tableSelect = document.getElementById('table');
+        const columnsContainer = document.getElementById('columns-container');
+        const whereContainer = document.getElementById('where-container');
 
-// Define the available columns for each table
-const columnsByTable = {
-  supplier: ['supplier_id: ', 'supplier_name: ', 'address: ', 'phone: ', 'email: '],
-  product: ['pid: ', 'product_id: ', 'product_name: ', 'description: ', 'price: ', 'quantity: ','status: ', 'supplier_id: ']
-};
+        // Define the available columns for each table
+        const columnsByTable = {
+          supplier: ['supplier_id: ', 'supplier_name: ', 'address: ', 'phone: ', 'email: '],
+          product: ['pid: ', 'product_id: ', 'product_name: ', 'description: ', 'price: ', 'quantity: ','status: ', 'supplier_id: ']
+        };
 
-tableSelect.addEventListener('change', function() {
-  const selectedTable = this.value;
+        tableSelect.addEventListener('change', function() {
+          const selectedTable = this.value;
 
-  // Clear previous input fields
-  columnsContainer.innerHTML = '';
-  whereContainer.innerHTML = '';
+          // Clear previous input fields
+          columnsContainer.innerHTML = '';
+          whereContainer.innerHTML = '';
 
-  // Add columns input fields for update query
-  const columns = columnsByTable[selectedTable];
-  for (let i = 0; i < columns.length; i++) {
-    const column = columns[i];
+          // Add columns input fields for update query
+          const columns = columnsByTable[selectedTable];
+          for (let i = 0; i < columns.length; i++) {
+            const column = columns[i];
 
-    const label = document.createElement('label');
-    label.textContent = column;
+            const label = document.createElement('label');
+            label.textContent = column;
 
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.name = 'columns[]';
-    input.value = '';
-    input.addEventListener('change', function() {
-      input.type = this.checked ? 'text' : 'checkbox';
-      input.name = this.checked ? 'values[]' : 'columns[]';
-    });
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.name = 'columns[]';
+            input.value = column;
 
-    const div = document.createElement('div');
-    div.appendChild(label);
-    div.appendChild(input);
+            input.addEventListener('change', function() {
+              if (this.checked) {
+                const textInput = document.createElement('input');
+                textInput.type = 'text';
+                textInput.name = 'values[]';
+                textInput.setAttribute('data-column', column); // Store the column name as a custom attribute
+                this.parentNode.appendChild(textInput);
+              } else {
+                const textInput = this.parentNode.querySelector('input[type="text"]');
+                if (textInput) {
+                  textInput.parentNode.removeChild(textInput);
+                }
+              }
+            });
 
-    columnsContainer.appendChild(div);
-  }
+            const div = document.createElement('div');
+            div.appendChild(label);
+            div.appendChild(input);
 
-  // Add columns input fields for WHERE clause
-  const whereColumns = columnsByTable[selectedTable];
-  for (let i = 0; i < whereColumns.length; i++) {
-    const column = whereColumns[i];
+            columnsContainer.appendChild(div);
+          }
 
-    const label = document.createElement('label');
-    label.textContent = column;
+          // Add columns input fields for WHERE clause
+          const whereColumns = columnsByTable[selectedTable];
+          for (let i = 0; i < whereColumns.length; i++) {
+            const column = whereColumns[i];
 
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.name = 'where_columns[]';
-    input.value = '';
-    input.addEventListener('change', function() {
-      input.type = this.checked ? 'text' : 'checkbox';
-      input.name = this.checked ? 'where_values[]' : 'where_columns[]';
-    });
+            const label = document.createElement('label');
+            label.textContent = column;
 
-    const div = document.createElement('div');
-    div.appendChild(label);
-    div.appendChild(input);
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.name = 'where_columns[]';
+            input.value = column;
 
-    whereContainer.appendChild(div);
-  }
-});
+            input.addEventListener('change', function() {
+              if (this.checked) {
+                const textInput = document.createElement('input');
+                textInput.type = 'text';
+                textInput.name = 'where_values[]';
+                textInput.setAttribute('data-column', column); // Store the column name as a custom attribute
+                this.parentNode.appendChild(textInput);
+              } else {
+                const textInput = this.parentNode.querySelector('input[type="text"]');
+                if (textInput) {
+                  textInput.parentNode.removeChild(textInput);
+                }
+              }
+            });
 
+            const div = document.createElement('div');
+            div.appendChild(label);
+            div.appendChild(input);
+
+            whereContainer.appendChild(div);
+          }
+        });
     </script>
 </body>
 </html>
