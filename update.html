@@ -47,8 +47,8 @@
 
         // Define the available columns for each table
         const columnsByTable = {
-          supplier: ['supplier_id: ', 'supplier_name: ', 'address: ', 'phone: ', 'email: '],
-          product: ['pid: ', 'product_id: ', 'product_name: ', 'description: ', 'price: ', 'quantity: ','status: ', 'supplier_id: ']
+          supplier: ['supplier_id', 'supplier_name', 'address', 'phone', 'email'],
+          product: ['pid', 'product_id', 'product_name', 'description', 'price', 'quantity','status', 'supplier_id']
         };
 
         tableSelect.addEventListener('change', function() {
@@ -64,7 +64,7 @@
             const column = columns[i];
 
             const label = document.createElement('label');
-            label.textContent = column;
+            label.textContent = column + ': ';
 
             const input = document.createElement('input');
             input.type = 'checkbox';
@@ -99,7 +99,7 @@
             const column = whereColumns[i];
 
             const label = document.createElement('label');
-            label.textContent = column;
+            label.textContent =  column + ': ';
 
             const input = document.createElement('input');
             input.type = 'checkbox';
