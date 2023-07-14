@@ -13,25 +13,16 @@
         <h2>Please sign in to continue</h2>
         <p id = "incorrect"></p>
 
-        <form action="connection.php" method="post">
+        <form action="db.php" method="post">
             <div class = "txt_field">
-                <input type="text" name="servername" id ="servername" placeholder="Server Name"/>
-            </div>
-
-            <div class = "txt_field">
-                <input type="text" name="username" id ="userID" placeholder="Username"/>
+                <input type="text" name="username" id ="username" placeholder="Username"/>
             </div>
 
             <div class = "txt_field">
                 <input type="password" name="password" id ="password" placeholder="Password"/>
             </div>
 
-            <div class = "txt_field">
-                <input type="test" name="dbname" id ="dbname" placeholder="Database Name"/>
-            </div>
-
             <input type="submit" value="Login">
-            <!--<input type="button" value="Login" onclick="authorize_user();"/> --> 
         </form>
     </div>
     <script src="index.js"></script>
