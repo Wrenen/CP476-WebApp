@@ -19,7 +19,6 @@
   display:table-cell;
 }
 
-/* update_style.css */
 body {
   background-color: #121212;
   color: #fff;
@@ -132,7 +131,7 @@ input[type="submit"] {
   background-color: #7e0202;
   cursor: pointer;
   margin-top: 20px;
-  border: 2px solid #3f3e3e;
+  border: 2px solid #ce0101;
   color: #ffffff;
   outline: 4px #fff;
   padding: 8px 12px;
@@ -142,13 +141,14 @@ input[type="submit"] {
 }
 
 #add-btn,
-#add-field-btn{
+#add-field-btn,
+#back-btn{
   background-color: #027402;
   cursor: pointer;
   margin-top: 20px;
   outline: 4px #fff;
   color: #ffffff;
-  border: 2px solid #3f3e3e;
+  border: 2px solid #02be02;
   padding: 8px 12px;
   margin-top: 5px;
   border-radius: 4px;

@@ -102,5 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+<a href="search.html"> <button id="back-btn">back</button> </a>
 </body>
 </html>
