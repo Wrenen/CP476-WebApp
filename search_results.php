@@ -71,11 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // add " " to strings to account for extra space in data naming
     for ($i = 0; $i < $stmt_len; $i++) {
-        if (is_string($stmt_vals[$i])) {
-            $binding_val = " ". $stmt_vals[$i];
-        } else {
-            $binding_val = $stmt_vals[$i];
-        }
+        $binding_val = $stmt_vals[$i];
+        
         $stmt->bindValue($i + 1, $binding_val);
     }
 
