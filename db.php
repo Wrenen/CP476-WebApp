@@ -1,7 +1,5 @@
 <?php
 // connect to database
-$username = $_POST['username'];
-$password = $_POST['password'];
 
 $dns = "mysql:host=localhost;dbname=cp476_db;charset=utf8mb4";
 $options = [
@@ -11,10 +9,10 @@ $options = [
 ];
 
 try{
-  $conn = new PDO($dns, $username, $password, $options);
-  echo "<script>console.log('Database Connected successfully');window.location.replace(\"main.php\");</script>";
+  $conn = new PDO($dns, "root", "spring2023", $options);
+  echo "<script>console.log('Database Connected successfully');</script>";
 } catch (PDOException $e){
   error_log($e->getMessage());
   exit('Database connection failed'); 
 }
-?>S
+?>
