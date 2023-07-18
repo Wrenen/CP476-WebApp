@@ -9,6 +9,7 @@ var product = ['pid', 'product_id', 'product_name', 'description', 'price', 'qua
 var field_order  = [];
 var counter = 0;
 
+// checks local storage on startup to use previous query search fields
 function checkMemory() {
     console.log("checking history");
     if (localStorage.length > 1) {
@@ -38,13 +39,14 @@ function changeTable() {
     counter = 0;
 }
 
+// clears column fields in addField form
 function clearFields() {
     while (addFields.options.length > 0) {                
         addFields.remove(0);
     }
 }
 
-/*  <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"> */
+// adds selected search field to search field container -- also formats horizontal input and counts fields
 function addSearchField(content = "") {
     if (addFields.value != "-") {
         addForm.style.display = "none";
@@ -68,6 +70,7 @@ function addSearchField(content = "") {
     }
 }
 
+// removes search field using remove button
 function removeSearchField() {
     let element = document.getElementById("search-fields");
 
@@ -78,6 +81,7 @@ function removeSearchField() {
     }
 }
 
+// adds table info column names to addField form
 function addFieldVals() {
     var tableSelected = (tableField.value == 'supplier') ? supplier : product;
     
@@ -98,12 +102,14 @@ function addFieldVals() {
     }
 }
 
+// opens addField form, sets default value and calls function to populate dropdown
 function addBtn() {
     addForm.style.display = "block";
     addFields.value = '-';
     addFieldVals();
 }
 
+// commits all the current page info to local storage -- used on startup to save previous query fields
 function commitToMem() {
     localStorage.setItem("table", tableField.value);
     for(let i = 0; i != field_order.length; i++) {

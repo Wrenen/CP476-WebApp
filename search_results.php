@@ -74,14 +74,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the submitted table value
     $table = $_POST['table'];
 
-    // Retrieve the submitted column values
+    // var initialization
     $fields = array();
     $values = array();
     $init_count = 0;
 
+    // query statement initialization
     $stmt_prep = "SELECT * FROM $table";
     $stmt_vals = array();
     
+    // retrieves variable information from query page
     while(true) {
         $field_name = 'field-' . $init_count;
         $field_val = 'input-' . $init_count;
@@ -99,6 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<p><strong>Selected Table: </strong>$table</p>";
     echo "<p><strong>Search Parameters:</strong></p>";
     
+    // if no query fields, print whole table
+    // otherwise, start forming sql query
     if ($init_count > 0){
         $stmt_prep .= " WHERE ";
         for ($i = 0; $i < count($fields); $i++) {
@@ -126,6 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_len=count($stmt_vals);
     echo "<p><strong>Statement:</strong> $stmt_prep, <strong>indexes:</strong> $stmt_len</p>";
 
+    // preparing statement
     $stmt = $conn->prepare($stmt_prep);
     for ($i = 0; $i < $stmt_len; $i++) {
         $binding_val = $stmt_vals[$i];
@@ -135,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $resultsTable = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // outputs information to table
     if (count($resultsTable) > 0) {
         echo "<table border=1>";
         echo "<tr>";
