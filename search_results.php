@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
         }
         if ($valid) {
-            echo "<p>$field = $input</p>";
+            echo "<p>$field = <strong>$input</strong></p>";
         }
         return $input;
     }

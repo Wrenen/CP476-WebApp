@@ -73,7 +73,6 @@ function removeSearchField() {
 
     if (element.childNodes.length > 0) {
         document.querySelector('select[name="add-fields"] option[value="' + field_order.shift() + '"]').disabled = false;
-        console.log(element.lastChild);
         element.removeChild(element.lastChild);
         counter -= 1;
     }
