@@ -10,6 +10,27 @@ var field_order  = [];
 
 var counter = 0;
 
+function checkMemory() {
+    console.log("checking history");
+    if (localStorage.length > 1) {
+        console.log("loading previous history");
+        table = localStorage.getItem("table");
+        tableSelected = (table == "supplier") ? supplier : product;
+        tableField.value = table;
+
+        addFieldVals();
+       
+        for(let i = 0; i != tableSelected.length; i++) {
+            storedVal = localStorage.getItem(tableSelected[i]);
+            if (storedVal) {
+                addFields.value = tableSelected[i];
+                addSearchField(storedVal);
+            }
+        }
+    }
+    localStorage.clear();
+}
+
 // resets page back to default
 function changeTable() {
     addForm.style.display = "none";
@@ -25,9 +46,8 @@ function clearFields() {
 }
 
 /*  <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"> */
-function addSearchField() {
+function addSearchField(content = "") {
     if (addFields.value != "-") {
-        console.log(addFields.value);
         addForm.style.display = "none";
         document.querySelector('select[name="add-fields"] option[value="' + addFields.value + '"]').disabled = true;
 
@@ -40,13 +60,11 @@ function addSearchField() {
         div.innerHTML = `
         <label for="` + counter + `" class="col-sm-2 col-form-label input-labels">` + (newSearch + ' =') + `</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control search-input" id="`+ counter + `"name="` + ("input-"+counter) + `" placeholder="` + newSearch + `">
+            <input type="text" class="form-control search-input" id="`+ counter + `"name="` + ("input-"+counter) + `" placeholder="` + newSearch + `" value="` + content + `">
             <input type="hidden" name="` + ("field-"+counter) + `" value="` + (newSearch) + `">
         </div> 
         `;
-        console.log(div);
         document.getElementById("search-fields").appendChild(div);
-
         counter += 1;
     }
 }
@@ -86,4 +104,12 @@ function addBtn() {
     addForm.style.display = "block";
     addFields.value = '-';
     addFieldVals();
+}
+
+function commitToMem() {
+    localStorage.setItem("table", tableField.value);
+    for(let i = 0; i != field_order.length; i++) {
+        element = document.getElementById(i);
+        localStorage.setItem(field_order[(field_order.length - 1) - i], element.value);
+    }
 }
