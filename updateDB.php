@@ -41,6 +41,7 @@
                             echo "<h2>Invalid input for ".$column.", not a valid float</h2>";
                             
                         }
+                        $input = "$".$input;
                         break;
                     case 'description':
                     case 'product_name':
