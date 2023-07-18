@@ -9,7 +9,7 @@ $options = [
 ];
 
 try{
-  $conn = new PDO($dns, 'root', 'yuvraj', $options);
+  $conn = new PDO($dns, 'root', '', $options);
 } catch (PDOException $e){
   error_log($e->getMessage());
   exit('Database connection failed'); 
