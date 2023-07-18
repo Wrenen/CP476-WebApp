@@ -7,7 +7,6 @@ var supplier = ['supplier_id', 'supplier_name', 'address', 'phone', 'email'];
 var product = ['pid', 'product_id', 'product_name', 'description', 'price', 'quantity','status', 'supplier_id'];
 
 var field_order  = [];
-
 var counter = 0;
 
 function checkMemory() {
@@ -22,7 +21,7 @@ function checkMemory() {
        
         for(let i = 0; i != tableSelected.length; i++) {
             storedVal = localStorage.getItem(tableSelected[i]);
-            if (storedVal) {
+            if (storedVal != null) {
                 addFields.value = tableSelected[i];
                 addSearchField(storedVal);
             }
