@@ -14,18 +14,18 @@ function checkMemory() {
     console.log("checking history");
     if (localStorage.length > 1) {
         console.log("loading previous history");
+        var field_order_json = JSON.parse(localStorage.getItem("field_order"));
         table = localStorage.getItem("table");
         tableSelected = (table == "supplier") ? supplier : product;
         tableField.value = table;
 
         addFieldVals();
-       
-        for(let i = 0; i != tableSelected.length; i++) {
-            storedVal = localStorage.getItem(tableSelected[i]);
-            if (storedVal != null) {
-                addFields.value = tableSelected[i];
-                addSearchField(storedVal);
-            }
+        
+        for(let i = field_order_json.length - 1; i >= 0; i--) {
+            storedVal = localStorage.getItem(field_order_json[i]);
+            addFields.value = field_order_json[i];
+            fieldVal = (storedVal == "-") ? "" : storedVal;
+            addSearchField(fieldVal);
         }
     }
     localStorage.clear();
@@ -112,8 +112,13 @@ function addBtn() {
 // commits all the current page info to local storage -- used on startup to save previous query fields
 function commitToMem() {
     localStorage.setItem("table", tableField.value);
-    for(let i = 0; i != field_order.length; i++) {
+    localStorage.setItem("field_order", JSON.stringify(field_order));
+    for(let i = 0; i < field_order.length; i++) {
         element = document.getElementById(i);
-        localStorage.setItem(field_order[(field_order.length - 1) - i], element.value);
+        if (element.value!="") {
+            localStorage.setItem(field_order[(field_order.length - 1) - i], element.value);
+        }else {
+            localStorage.setItem(field_order[(field_order.length - 1) - i], "-");
+        }
     }
 }
