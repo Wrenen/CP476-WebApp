@@ -35,13 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 break;
             case 'price':
-                if(filter_var($input, FILTER_VALIDATE_FLOAT)===false){
+                if (substr($input,0,1) != "$"){
+                    $input = "$" . $input;
+                }
+                if(filter_var(substr($input,1), FILTER_VALIDATE_FLOAT)===false){
                     //display error message
                     echo "<p style='color:red'>Invalid input for <strong>".$field."</strong>, not a valid float</p>";
                     $valid = false;
-                    
-                }else if (substr($input,0,1) != "$"){
-                    $input = "$" . $input;
                 }
                 break;
             case 'description':
