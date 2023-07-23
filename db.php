@@ -9,8 +9,7 @@ $options = [
 ];
 
 try{
-  $conn = new PDO($dns, "root", "spring2023", $options);
-  echo "<script>console.log('Database Connected successfully');</script>";
+  $conn = new PDO($dns, 'root', '', $options);
 } catch (PDOException $e){
   error_log($e->getMessage());
   exit('Database connection failed'); 
