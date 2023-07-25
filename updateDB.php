@@ -54,10 +54,19 @@
                 case 'address':
                 case 'phone':
                     for ($i = 0; $i < strlen($input); $i++) {
-                        if (ctype_alpha($input[$i]) === false && ctype_space($input[$i]) === false && $input != '-') {
+                        if (ctype_alnum($input[$i]) === false && ctype_space($input[$i]) === false && $input != '-') {
                             //display error message
+                            //if column is description, allow for punctuation
+                            if($column == 'description'){
+                                if($input[$i] == '.' || $input[$i] || ',' && $input[$i] || '!' && $input[$i] || '?' && $input[$i] || ':' || $input[$i] == ';' || $input[$i] == '(' || $input[$i] == ')' || $input[$i] == '"' || $input[$i] == "'"){
+                                    continue;
+                                }
+                            }
+                            
                             echo "<h2>Invalid input for ".$column.", not a valid string</h2>";
                             $error = true;
+                            break;
+    
                             
                         }
                     }
