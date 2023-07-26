@@ -19,6 +19,4 @@
       <li> <a href="#"> <button class="dbBtn"><img src="assests/delete.svg"> <br>delete</button> </a> </li>
     </ul>
   </div>
-
-  <script src="index.js"></script>
 </body>

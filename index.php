@@ -70,6 +70,5 @@
             <input type="submit" value="Login">
         </form>
     </div>
-    <script src="index.js"></script>
   </body>
 </html>
