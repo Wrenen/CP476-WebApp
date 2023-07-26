@@ -116,13 +116,15 @@
                 $sql .= ", ";
             }
         }
-        $sql .= " WHERE ";
-        for ($i = 0; $i < count($whereColumns); $i++) {
-            $sql .= "$whereColumns[$i] = ?";
-            if ($i < count($whereColumns) - 1) {
-                $sql .= " AND ";
-            }else{
-                $sql .= ";";
+        if (count($whereColumns) > 0){
+            $sql .= " WHERE ";
+            for ($i = 0; $i < count($whereColumns); $i++) {
+                $sql .= "$whereColumns[$i] = ?";
+                if ($i < count($whereColumns) - 1) {
+                    $sql .= " AND ";
+                }else{
+                    $sql .= ";";
+                }
             }
         }
 
