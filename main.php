@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="main_style.css">
 </head>
 
-<body onload="set_username()">
-  <h1 id="welcome">Welcome User,</h1>
+<body>
+  <h1 id="welcome">Welcome,</h1>
 
   <div class="listContainer">
     <ul class="btnList">
