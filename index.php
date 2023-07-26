@@ -1,10 +1,18 @@
 <?php
   
   $is_invalid = false;
+
+  function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
+
   if ($_SERVER["REQUEST_METHOD"] === "POST"){
-    $is_invalid = false;
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = sanitize_input($_POST['username']);
+    $password = sanitize_input($_POST['password']);
 
     // Connnect to the database
     require_once 'db.php';
