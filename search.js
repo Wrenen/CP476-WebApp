@@ -36,6 +36,8 @@ function changeTable() {
     addForm.style.display = "none";
     document.getElementById("search-fields").innerHTML = "";
     clearFields();
+    field_order = []
+    localStorage.clear();
     counter = 0;
 }
 
