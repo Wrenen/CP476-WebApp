@@ -16,7 +16,7 @@
     <ul class="btnList">
       <li> <a href="search.html"> <button class="dbBtn"><img src="assests/search.svg"> <br>search</button> </a> </li>
       <li> <a href="update.html"> <button class="dbBtn"><img src="assests/update.svg"> <br>update</button> </a> </li>
-      <li> <a href="#"> <button class="dbBtn"><img src="assests/delete.svg"> <br>delete</button> </a> </li>
+      <li> <a href="delete.html"> <button class="dbBtn"><img src="assests/delete.svg"> <br>delete</button> </a> </li>
     </ul>
   </div>
 </body>
