@@ -37,6 +37,7 @@
         }
     }
 
+    $conn = null;
     $is_invalid = true;
   }
 ?>
