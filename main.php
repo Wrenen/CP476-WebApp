@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="main_style.css">
 </head>
 
-<body onload="set_username()">
-  <h1 id="welcome">Welcome User,</h1>
+<body>
+  <h1 id="welcome">Welcome,</h1>
 
   <div class="listContainer">
     <ul class="btnList">
@@ -19,6 +19,4 @@
       <li> <a href="#"> <button class="dbBtn"><img src="assests/delete.svg"> <br>delete</button> </a> </li>
     </ul>
   </div>
-
-  <script src="index.js"></script>
 </body>

@@ -15,62 +15,77 @@
     require_once 'db.php';
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //set error flag
+        $error = false;
 
         //sanatize and validate input
         function sanitize_validate($input, $column){
-                //remove whitespace from beginning and end of input
-                $input = trim($input);
-                //remove slashes from input
-                $input = stripslashes($input);
-                $input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                switch($column){
-                    case 'supplier_id':
-                    case 'pid':
-                    case 'product_id':
-                    case 'quantity':
-                        $input = filter_var($input, FILTER_SANITIZE_NUMBER_INT);
-                        if(filter_var($input, FILTER_VALIDATE_INT)===false){
+            global $error;
+            //remove whitespace from beginning and end of input
+            $input = trim($input);
+            //remove slashes from input
+            $input = stripslashes($input);
+            $input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            switch($column){
+                case 'supplier_id':
+                case 'pid':
+                case 'product_id':
+                case 'quantity':
+                    $input = filter_var($input, FILTER_SANITIZE_NUMBER_INT);
+                    if(filter_var($input, FILTER_VALIDATE_INT)===false){
+                        //display error message
+                        echo "<h2>Invalid input for ".$column.", not a valid int</h2>"; 
+                        $error = true;
+                    }
+                    break;
+                case 'price':
+                    $input = filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT);
+                    if(filter_var($input, FILTER_VALIDATE_FLOAT)===false){
+                        //display error message
+                        echo "<h2>Invalid input for ".$column.", not a valid float</h2>";
+                        $error = true;
+                        
+                    }
+                    $input = "$".$input;
+                    break;
+                case 'description':
+                case 'product_name':
+                case 'supplier_name':
+                case 'address':
+                case 'phone':
+                    for ($i = 0; $i < strlen($input); $i++) {
+                        if (ctype_alnum($input[$i]) === false && ctype_space($input[$i]) === false && $input != '-') {
                             //display error message
-                            echo "<h2>Invalid input for ".$column.", not a valid int</h2>"; 
-                        }
-                        break;
-                    case 'price':
-                        $input = filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT);
-                        if(filter_var($input, FILTER_VALIDATE_FLOAT)===false){
-                            //display error message
-                            echo "<h2>Invalid input for ".$column.", not a valid float</h2>";
-                            
-                        }
-                        $input = "$".$input;
-                        break;
-                    case 'description':
-                    case 'product_name':
-                    case 'supplier_name':
-                    case 'address':
-                    case 'phone':
-                        for ($i = 0; $i < strlen($input); $i++) {
-                            if (ctype_alpha($input[$i]) === false && ctype_space($input[$i]) === false && $input != '-') {
-                                //display error message
-                                echo "<h2>Invalid input for ".$column.", not a valid string</h2>";
-                                
+                            //if column is description, allow for punctuation
+                            if($column == 'description'){
+                                if($input[$i] == '.' || $input[$i] || ',' && $input[$i] || '!' && $input[$i] || '?' && $input[$i] || ':' || $input[$i] == ';' || $input[$i] == '(' || $input[$i] == ')' || $input[$i] == '"' || $input[$i] == "'"){
+                                    continue;
+                                }
                             }
-                        }
-                        break;
-                    case 'email':
-                        $input = filter_var($input, FILTER_SANITIZE_EMAIL);
-                        if(filter_var($input, FILTER_VALIDATE_EMAIL)===false){
-                            //display error message
-                            echo "<h2>Invalid input for email, not a valid email address</h2>";
+                            
+                            echo "<h2>Invalid input for ".$column.", not a valid string</h2>";
+                            $error = true;
+                            break;
+    
                             
                         }
-                        break;
+                    }
+                    break;
+                case 'email':
+                    $input = filter_var($input, FILTER_SANITIZE_EMAIL);
+                    if(filter_var($input, FILTER_VALIDATE_EMAIL)===false){
+                        //display error message
+                        echo "<h2>Invalid input for email, not a valid email address</h2>";
+                        $error = true;
+                        
+                    }
+                    break;
 
                 
             }
         
-        return $input;
-    }
-
+            return $input;
+        }
         // Retrieve the submitted table value
         $table = $_POST['table'];
 
@@ -82,6 +97,16 @@
         $whereColumns = isset($_POST['where_columns']) ? $_POST['where_columns'] : [];
         $whereValues = isset($_POST['where_values']) ? array_map('sanitize_validate', $_POST['where_values'],$whereColumns) : [];
 
+        //check error flag
+        if($error){
+            echo "<a href='update.html'>Go Back</a>";
+            exit();
+        }
+        elseif($columns == [] || $values == []){
+            echo "<h2>Invalid input for columns or values, please enter at least one column and value</h2>";
+            echo "<a href='update.html'>Go Back</a>";
+            exit();
+        }
         //create sql string
 
         $sql = "UPDATE $table SET ";
@@ -91,13 +116,15 @@
                 $sql .= ", ";
             }
         }
-        $sql .= " WHERE ";
-        for ($i = 0; $i < count($whereColumns); $i++) {
-            $sql .= "$whereColumns[$i] = ?";
-            if ($i < count($whereColumns) - 1) {
-                $sql .= " AND ";
-            }else{
-                $sql .= ";";
+        if (count($whereColumns) > 0){
+            $sql .= " WHERE ";
+            for ($i = 0; $i < count($whereColumns); $i++) {
+                $sql .= "$whereColumns[$i] = ?";
+                if ($i < count($whereColumns) - 1) {
+                    $sql .= " AND ";
+                }else{
+                    $sql .= ";";
+                }
             }
         }
 
