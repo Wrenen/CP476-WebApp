@@ -22,7 +22,8 @@ CREATE TABLE `product` (
   `status` char(2),
   `supplier_id` int,
   PRIMARY KEY (pid),
-  FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
+  FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id) ON DELETE SET NULL
+
 );
 
 CREATE TABLE `user` (
