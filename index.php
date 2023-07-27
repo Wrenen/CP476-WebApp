@@ -27,11 +27,7 @@
 
     // Validate if passwords match
     if ($result == true) {
-        if ( $result["password"] == $password ){
-
-            session_start();
-            $_SESSION["username"] = $result["username"];
-            
+        if ( $result["password"] == $password ){            
             header("Location: main.php");
             exit;
         }
